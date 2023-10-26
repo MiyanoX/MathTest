@@ -2,6 +2,7 @@ import os
 import shutil
 import random
 from datetime import datetime
+import sys
 
 # Create the directory if it doesn't exist.
 def create_directory(directory_name):
@@ -73,9 +74,17 @@ def rename_files_sequentially(directory_path, pre_name):
         print(f"An error occurred: {e}")
         
 def random_problem(new_directory_name, problem_number):
-    directory_problem_path = "./Problems"
-    directory_answer_path = "./Answers"
-    new_directory_path = "./" + new_directory_name
+    # Get the current working directory
+    
+    # Get the full path of the current script
+    script_path = os.path.realpath(sys.argv[0])
+
+    # Extract the directory path
+    directory_path = os.path.dirname(script_path)
+    
+    directory_problem_path = directory_path + "/Problems"
+    directory_answer_path = directory_path + "/Answers"
+    new_directory_path = directory_path + "/" + new_directory_name
     new_directory_problem_path = new_directory_path + "/Problems"
     new_directory_answer_path = new_directory_path + "/Answers"
     
@@ -87,6 +96,7 @@ def random_problem(new_directory_name, problem_number):
     rename_files_sequentially(new_directory_problem_path, "Problem")
     rename_files_sequentially(new_directory_answer_path, "Answer")
 
-
-now = datetime.now()
-random_problem(now.strftime("%Y-%m-%d-%H-%M-%S"), 20)
+print("Welcome to Math Test random generation program!")
+problem_num = int(input("Please enter the number of problems: "))
+name = input("Please enter the folder name: ")
+random_problem(name, problem_num)
